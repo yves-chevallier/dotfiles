@@ -2,9 +2,7 @@
     link:
       relink: true
       create: true
-
 - clean: ['~']
-
 - shell: 
     - [git submodule update --init --recursive, Installing submodules]
 - link: 
@@ -18,9 +16,7 @@
     ~/.dircolors: 
     ~/.gitconfig: 
     ~/.gitignore: 
-    ~/.minttyrc: 
     ~/.inputrc:
+    ~/.zshrc:
     ~/.Xresources: 
     ~/.config/mintty: config/mintty
-
-

@@ -2,15 +2,13 @@
 # Yves Chevallier 2017
 [user]
 	name = Yves Chevallier
-	email = nowox@x0x.ch
-
+	email = yves.chevallier@heig-vd.ch
+	signingkey = AF0216A5A24E6EB07B7ACD024AD83A73CE9BBBE6
 [github]
-    user  = nowox
+    user  = yves-chevallier
     token = token
-
 [credential]
     helper=manager
-
 [core]
     editor = vim       # Because by default it's vi and vi is not always mapped to vim
 	ignorecase = false
@@ -19,16 +17,13 @@
     compression = 0    # Faster on Cygwin
     whitespace = cr-at-eol
 	excludesfile = \\\\strne01-a.csem.local\\data-e\\users\\Ycr\\Documents\\gitignore_global.txt
-
+	pager = cat
 [help]
     autocorrect = 1 # 0.1 seconds to autocorrect mistypen commands.
-
 [color]
     ui = auto
-
 [web]
     browser = google-chrome
-
 [advice]
     pushNonFastForward = false
     statusHints = false

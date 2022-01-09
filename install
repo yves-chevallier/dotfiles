@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 set -e
 
 CONFIG="install.conf.yaml"
@@ -11,9 +10,4 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "${BASEDIR}"
 git submodule update --init --recursive "${DOTBOT_DIR}"
 
-#ln -s emojis/noto/png/128/ config/mintty/emojis/noto
-cp -Lr $BASEDIR/config/mintty $(wslpath $APPDATA)
-
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
-
-
