@@ -1,17 +1,10 @@
 " My comprehensive .vimrc
-" @author Yves Chevallier <nowox@x0x.ch>
-" @date   2016-09-05 Mon 08:36 AM
-
-" Clear all the settings. Very useful when the .vimrc is reloaded.
 set all&
-
-" Vim7 is still Vi compatible. Required to use the power of Vim.
 set nocompatible
 
 " Depending on the architecture (I am working on both Windows and Linux),
 " I want different settings.
 let s:is_windows = has("win16") || has("win32") || has("win64")|| has("win95")
-let s:is_cygwin  = has('win32unix')
 
 if s:is_windows
     let $VIM = $HOME."\\.vim"
@@ -21,16 +14,15 @@ endif
 " Initiate the plugin manager Vundle
 call plug#begin('~/.vim/plugged')
     Plug 'VundleVim/Vundle.vim'
-"    Plug 'vim-airline/vim-airline'
     Plug 'jamessan/vim-gnupg'
     Plug 'vim-airline/vim-airline-themes'
-    Plug 'tomasiser/vim-code-dark'
+    Plug 'liuchengxu/vim-clap'
+    Plug 'joshdick/onedark.vim'
+    Plug 'sheerun/vim-polyglot'
     Plug 'terryma/vim-multiple-cursors'
     Plug 'itchyny/vim-cursorword'
-    Plug 'nowox/Nowox'
     Plug 'tyrannicaltoucan/vim-quantum'
-    Plug 'w0ng/vim-hybrid'
-    Plug 'icymind/NeoSolarized'
+    Plug 'airblade/vim-gitgutter'
     Plug 'ajh17/VimCompletesMe'
     Plug 'junegunn/vim-easy-align'
     Plug 'junegunn/limelight.vim'
@@ -47,8 +39,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'scrooloose/nerdtree'           " File explorer
     Plug 'scrooloose/nerdcommenter'
     Plug 'kshenoy/vim-signature'
-    Plug 'jpalardy/vim-slime'
 call plug#end()
+
+colorscheme onedark
 
 let g:colorizer_startup=0
 
@@ -77,10 +70,6 @@ let g:rainbow_conf = {
 
 let g:quantum_black=1
 let g:quantum_italics=1
-
-let g:slime_target = "tmux"
-let g:slime_dont_ask_default = 1
-let g:slime_default_config = {"socket_name": "default", "target_pane": "2"}
 
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_custom_ignore = {
@@ -113,11 +102,6 @@ let g:tagbar_iconchars = ['►', '▼'] " Set for consolas powerline
 
 let g:fakeclip_terminal_multiplexer_type="tmux"
 
-"let g:airline_theme = 'distinguished' " With brighter split separators
-let g:airline_theme = 'base16' " With brighter split separators
-let g:airline#extensions#tabline#enabled = 1      " Allows to view windows/tabs
-let g:airline_powerline_fonts            = 1      " Fancy fonts
-
 let g:NERDTreeDirArrows  = 1           " Show nice arrows instead of |+
 let g:NERDTreeShowHidden = 1           " Show hidden files
 let g:NERDTreeWinPos     = "left"      " Window position
@@ -128,14 +112,6 @@ let g:airline_right_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_left_alt_sep= ''
 let g:airline_left_sep = ''
-
-" Shell and workarounds for Windows
-" =================================
-if s:is_windows
-    set shell=C:/cygwin/bin/bash
-    set shellcmdflag=--login\ -c
-    set shellxquote=\"
-endif
 
 " History & Backup
 " ================
@@ -197,20 +173,12 @@ augroup resCur
   autocmd BufWinEnter * call ResCur()
 augroup END
 
-function! Present()
-  set background=light
-  colorscheme hybrid
-  set nocursorline
-  set nocursorcolumn
-  set colorcolumn=0
-endfunction
 
 " Presentation
 " ============
 " Dispaly the line numbers on the left side in relative mode and highlight
 " the current line number on the cursor line.
 set number
-set relativenumber
 set numberwidth=4
 
 set helpheight=1000
@@ -243,7 +211,7 @@ set linebreak
 set listchars=eol:$
 
 " Use Powerline consolas on the GUI
-set guifont=Powerline_Consolas:h11:cANSI
+set guifont=FiraCode:h11:cANSI
 
 " Display the messages in english on the GUI (valid for French version of Windows)
 if has('gui')
@@ -367,24 +335,6 @@ set shortmess=aoA
 if (has("termguicolors"))
     set termguicolors
 endif
-
-let bash_background=$BACKGROUND
-
-if bash_background == 'light'
-    set background=light
-    colorscheme PaperColor
-    set nocursorcolumn
-    set nocursorline
-    set colorcolumn=0
-else
-    set background=dark
-    "colorscheme nowox
-    let g:neosolarized_bold = 1
-    let g:neosolarized_underline = 1
-    let g:neosolarized_italic = 1
-    colorscheme codedark
-endif
-syntax on
 
 " Mouse
 " =====
@@ -685,39 +635,6 @@ vnoremap <C-x> "+x
 inoremap <C-Home> <C-c>0i
 nnoremap <C-Home> 0
 vnoremap <C-Home> 0
-
-" <C-Tab>, <C-S-Tab> Next/Previous buffer
-if s:is_cygwin
-    " <C-Tab> Next buffer
-    set <f26>=[1;5I
-    map <silent> <f26> :bn!<cr>
-    imap <silent> <f26> <esc>:bn!<cr>a
-    vmap <silent> <f26> <c-c>:bn!<cr>
-
-    " <C-S-Tab> Previous buffer
-    set <f27>=[1;6I
-    map <silent> <f27> :bp!<cr>
-    imap <silent> <f27> <esc>:bp!<cr>a
-    vmap <silent> <f27> <c-c>:bp!<cr>
-else
-
-    " For Xterm, the .Xresources must contain:
-    " xterm*VT100.Translations: #override \
-    "   Ctrl ~Shift <Key>Tab: string(0x1b) string("[27;5;9~") \n\
-    "   Ctrl Shift <Key>Tab: string(0x1b) string("[27;6;9~")
-
-    " <C-Tab> Next buffer
-    set <f26>=[27;5;9~
-    map <silent> <f26> :bn!<cr>
-    imap <silent> <f26> <esc>:bn!<cr>a
-    vmap <silent> <f26> <c-c>:bn!<cr>
-
-    " <C-S-Tab> Previous buffer
-    set <f27>=[27;6;9~
-    map <silent> <f27> :bp!<cr>
-    imap <silent> <f27> <esc>:bp!<cr>a
-    vmap <silent> <f27> <c-c>:bp!<cr>
-endif
 
 " Meta + char mappings
 " ====================
