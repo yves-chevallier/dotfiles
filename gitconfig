@@ -3,7 +3,7 @@
 [user]
 	name = Yves Chevallier
 	email = yves.chevallier@heig-vd.ch
-	signingkey = AF0216A5A24E6EB07B7ACD024AD83A73CE9BBBE6
+	signingkey = CF2D28AFBD3AFBD4
 [github]
     user  = yves-chevallier
     token = token
