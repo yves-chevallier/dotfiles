@@ -9,9 +9,6 @@ if [ -f /etc/bash_completion ]; then
 fi
 
 # Conditionals
-_iscygwin=0
-[[ $( uname -s ) == *"CYGWIN"* ]] && _iscygwin=1
-
 _isroot=0
 [[ $UID -eq 0 ]] && _isroot=1
 
@@ -52,9 +49,6 @@ export TIME_STYLE=long-iso
 # Mintty
 bind -r '\C-s'
 stty -ixon
-
-# Xorg/X
-export DISPLAY=:0.0
 
 # Prompt
 source ~/.bash_prompt
@@ -132,16 +126,5 @@ extract () {
     echo "'$1' is not a valid file"
   fi
 }
-
-bcomp() {
-    a="$1"
-    b="$2"
-
-    aw="$(cygpath -w $a)"
-    bw="$(cygpath -w $b)"
-
-    "/cygdrive/c/Program Files (x86)/Beyond Compare 4/Bcomp.exe" $aw $bw /lefttitle=$a /righttitle=$b
-}
-
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

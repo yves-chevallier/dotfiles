@@ -173,3 +173,5 @@
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
+[safe]
+	directory = /srv

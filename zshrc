@@ -132,8 +132,10 @@ compinit
 # Example aliases
 alias zshconfig="mate ~/.zshrc"
 alias e="explorer.exe ."
-alias sumatra="/mnt/c/Users/yves.chevalli/AppData/Local/SumatraPDF/SumatraPDF.exe"
+alias i="ipython3"
+alias sumatra="/mnt/c/Users/canard/AppData/Local/SumatraPDF/SumatraPDF.exe"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
-export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/.config/composer/vendor/bin:$PATH
 
+source /mnt/c/Users/canard/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
