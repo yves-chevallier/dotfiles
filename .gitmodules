@@ -11,3 +11,12 @@
     depth = 1
 	path = emojis/noto
 	url = https://github.com/googlefonts/noto-emoji.git
+[submodule "zsh-autosuggestions"]
+	path = zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule "zsh-syntax-highlighting"]
+	path = zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "spaceship-prompt"]
+	path = spaceship-prompt
+	url = https://github.com/spaceship-prompt/spaceship-prompt.git

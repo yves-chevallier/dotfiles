@@ -138,4 +138,3 @@ alias sumatra="/mnt/c/Users/canard/AppData/Local/SumatraPDF/SumatraPDF.exe"
 #
 export PATH=$HOME/.local/bin:$HOME/.config/composer/vendor/bin:$PATH
 
-source /mnt/c/Users/canard/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
