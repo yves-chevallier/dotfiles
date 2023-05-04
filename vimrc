@@ -14,6 +14,7 @@ endif
 " Initiate the plugin manager Vundle
 call plug#begin('~/.vim/plugged')
     Plug 'VundleVim/Vundle.vim'
+    Plug 'github/copilot.vim'
     Plug 'jamessan/vim-gnupg'
     Plug 'vim-airline/vim-airline-themes'
     Plug 'liuchengxu/vim-clap'

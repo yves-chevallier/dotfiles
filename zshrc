@@ -99,7 +99,9 @@ plugins=(
     web-search
     zsh-autosuggestions
     zsh-syntax-highlighting
+    zsh_codex
 )
+
 
 source $ZSH/oh-my-zsh.sh
 
@@ -133,8 +135,10 @@ compinit
 alias zshconfig="mate ~/.zshrc"
 alias e="explorer.exe ."
 alias i="ipython3"
-alias sumatra="/mnt/c/Users/canard/AppData/Local/SumatraPDF/SumatraPDF.exe"
+alias sumatra="/mnt/c/Users/yves.chevalli/AppData/Local/SumatraPDF/SumatraPDF.exe"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
 export PATH=$HOME/.local/bin:$HOME/.config/composer/vendor/bin:$PATH
+
+bindkey '^X' create_completion
 

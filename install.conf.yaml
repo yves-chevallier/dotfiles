@@ -21,6 +21,7 @@
     ~/.Xresources: 
     ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions: zsh-autosuggestions
     ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting: zsh-syntax-highlighting
+    ~/.oh-my-zsh/custom/plugins/zsh-codex: zsh-codex
     ~/.oh-my-zsh/custom/themes/spaceship-prompt: spaceship-prompt
     ~/.oh-my-zsh/custom/themes/spaceship.zsh-theme: spaceship-prompt/spaceship.zsh-theme
 

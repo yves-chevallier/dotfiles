@@ -129,3 +129,4 @@ extract () {
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export PATH=$HOME/.local/bin:$HOME/.config/composer/vendor/bin:$PATH
+
