@@ -24,7 +24,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'itchyny/vim-cursorword'
     Plug 'tyrannicaltoucan/vim-quantum'
     Plug 'airblade/vim-gitgutter'
-    Plug 'ajh17/VimCompletesMe'
     Plug 'junegunn/vim-easy-align'
     Plug 'junegunn/limelight.vim'
     Plug 'skywind3000/asyncrun.vim'

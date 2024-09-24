@@ -99,7 +99,6 @@ plugins=(
     web-search
     zsh-autosuggestions
     zsh-syntax-highlighting
-    zsh_codex
 )
 
 
