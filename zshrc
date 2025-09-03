@@ -88,14 +88,14 @@ zstyle ':omz:update' frequency 30
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    git 
-    dirhistory 
-    history 
-    emoji 
-    encode64 
-    colorize 
-    cp 
-    tmux 
+    git
+    dirhistory
+    history
+    emoji
+    encode64
+    colorize
+    cp
+    tmux
     web-search
     zsh-autosuggestions
     zsh-syntax-highlighting
@@ -131,14 +131,17 @@ compinit
 alias zshconfig="mate ~/.zshrc"
 alias e="explorer.exe ."
 alias i="ipython3"
-alias sumatra="/mnt/c/Users/yves.chevalli/AppData/Local/SumatraPDF/SumatraPDF.exe"
+alias sumatra='/mnt/c/Users/Yves\ Chevallier/AppData/Local/SumatraPDF/SumatraPDF.exe'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
 export PATH=$HOME/.local/bin:$HOME/.config/composer/vendor/bin:$PATH
-export PATH="$HOME/.pyenv/bin:$PATH"
+#export PATH="$HOME/.pyenv/bin:$PATH"
 export PATH=$PATH:~/vcpkg
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
+#eval "$(pyenv init --path)"
+#eval "$(pyenv init -)"
 
 bindkey '^X' create_completion
 
+alias man='man -L fr'
+
+export C2000WARE_PATH=/opt/ti/c2000/C2000Ware_5_04_00_00
