@@ -1,0 +1,19 @@
+# ~/.zshrc.local — machine-specific / private settings (NOT version-controlled)
+#
+# Copy this to ~/.zshrc.local and adapt. It is sourced at the end of ~/.zshrc.
+#   cp ~/.dotfiles/zshrc.local.example ~/.zshrc.local
+
+# French man pages (requires: sudo apt install manpages-fr)
+# alias man='man -L fr'
+
+# IPython with a named profile
+# alias p='ipython --profile=etel'
+
+# Windows apps from WSL
+# alias sumatra='/mnt/c/Users/Yves\ Chevallier/AppData/Local/SumatraPDF/SumatraPDF.exe'
+
+# TI C2000 toolchain
+# export C2000WARE_PATH=/opt/ti/c2000/C2000Ware_5_04_00_00
+
+# vcpkg
+# export PATH="$PATH:$HOME/vcpkg"

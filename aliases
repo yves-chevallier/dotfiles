@@ -1,0 +1,57 @@
+# ~/.aliases — shared by zsh and bash. Modern CLI tooling (2026).
+# Every modern tool is guarded so a missing binary never breaks the shell.
+
+# --- Listing: eza (fallback to ls) -------------------------------------------
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza --group-directories-first --icons=auto'
+  alias ll='eza -l --group-directories-first --icons=auto --git'
+  alias la='eza -la --group-directories-first --icons=auto --git'
+  alias lt='eza --tree --level=2 --icons=auto'
+  alias lk='eza -l --sort=size --reverse'
+  alias ltime='eza -l --sort=modified'
+else
+  alias ls='ls -h --color=auto --group-directories-first'
+  alias ll='ls -lvh --color=auto --group-directories-first'
+  alias la='ll -a'
+  alias lt='ls -ltr'
+fi
+alias l='ls'
+
+# --- cat / grep --------------------------------------------------------------
+# Note: we deliberately do NOT alias `find`->fd or `grep`->rg — their flags
+# differ and that breaks habits/scripts. Use `fd` and `rg` by their own names.
+command -v bat >/dev/null 2>&1 && alias catp='bat'
+alias grep='grep --color=auto'
+
+# --- Navigation --------------------------------------------------------------
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# --- Safety / convenience ----------------------------------------------------
+alias df='df -h'
+alias du='du -ch'
+alias mkdir='mkdir -pv'
+
+# --- Editors -----------------------------------------------------------------
+if command -v nvim >/dev/null 2>&1; then
+  alias vi='nvim'
+  alias vim='nvim'
+  alias v='nvim'
+  alias svim='sudo -E nvim'
+else
+  alias v='vim'
+  alias svim='sudo -E vim'
+fi
+
+# --- Git ---------------------------------------------------------------------
+alias g='git'
+
+# --- tmux --------------------------------------------------------------------
+alias t='tmux -u'
+
+# --- WSL ---------------------------------------------------------------------
+command -v explorer.exe >/dev/null 2>&1 && alias e='explorer.exe .'
+
+# --- Misc --------------------------------------------------------------------
+alias i='ipython3'

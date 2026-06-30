@@ -1,147 +1,66 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# ~/.zshrc — interactive zsh configuration (WSL/Linux)
+# Bootstrapped by ./bootstrap.sh: starship + antidote + modern CLI tools.
 
-eval "$(dircolors $HOME/.dircolors)"
+# --- PATH --------------------------------------------------------------------
+export PATH="$HOME/.local/bin:$HOME/bin:$HOME/.scripts:$PATH"
+[ -d "$HOME/.config/composer/vendor/bin" ] && export PATH="$HOME/.config/composer/vendor/bin:$PATH"
 
-SPACESHIP_PROMPT_ORDER=(
-  dir           # Current directory section
-  git           # Git section (git_branch + git_status)
-  package       # Package version
-  node          # Node.js section
-  dotnet        # .NET section
-  ruby          # Ruby section
-  exec_time     # Execution time
-  line_sep      # Line break
-  battery       # Battery level and status
-  jobs          # Background jobs indicator
-  exit_code     # Exit code section
-  char          # Prompt character
-)
-
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="spaceship"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-zstyle ':omz:update' frequency 30
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-#ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-    git
-    dirhistory
-    history
-    emoji
-    encode64
-    colorize
-    cp
-    tmux
-    web-search
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-)
-
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-
+# --- Environment -------------------------------------------------------------
 export EDITOR="nvim"
+export VISUAL="nvim"
+export PAGER="less"
+export LESS="-R"
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+# --- History -----------------------------------------------------------------
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=100000
+SAVEHIST=100000
+setopt extended_history hist_expire_dups_first hist_ignore_dups hist_ignore_space
+setopt hist_verify inc_append_history share_history
 
+# --- Colors ------------------------------------------------------------------
+[ -f "$HOME/.dircolors" ] && eval "$(dircolors "$HOME/.dircolors")"
+
+# --- Plugins (antidote) ------------------------------------------------------
+ANTIDOTE_DIR="${ANTIDOTE_DIR:-$HOME/.antidote}"
+if [[ -e $ANTIDOTE_DIR/antidote.zsh ]]; then
+  source "$ANTIDOTE_DIR/antidote.zsh"
+  zsh_plugins="${ZDOTDIR:-$HOME}/.zsh_plugins"
+  # Regenerate the static bundle only when the manifest changed.
+  if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
+    antidote bundle <"${zsh_plugins}.txt" >"${zsh_plugins}.zsh"
+  fi
+  source "${zsh_plugins}.zsh"
+fi
+
+# --- Completion --------------------------------------------------------------
+autoload -Uz compinit && compinit -u
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
-autoload -Uz compinit
-compinit
+zstyle ':completion:*' menu select
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-alias zshconfig="mate ~/.zshrc"
-alias e="explorer.exe ."
-alias i="ipython3"
-alias sumatra='/mnt/c/Users/Yves\ Chevallier/AppData/Local/SumatraPDF/SumatraPDF.exe'
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-#
-export PATH=$HOME/.local/bin:$HOME/.config/composer/vendor/bin:$PATH
-#export PATH="$HOME/.pyenv/bin:$PATH"
-export PATH=$PATH:~/vcpkg
-#eval "$(pyenv init --path)"
-#eval "$(pyenv init -)"
+# --- Prompt (starship) -------------------------------------------------------
+command -v starship >/dev/null && eval "$(starship init zsh)"
 
-bindkey '^X' create_completion
+# --- Smarter cd (zoxide) -----------------------------------------------------
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 
-alias man='man -L fr'
+# --- Fuzzy finder (fzf) ------------------------------------------------------
+if command -v fzf >/dev/null; then
+  if fzf --zsh >/dev/null 2>&1; then
+    eval "$(fzf --zsh)"                                  # fzf >= 0.48
+  else
+    [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+    [ -f /usr/share/doc/fzf/examples/completion.zsh ]   && source /usr/share/doc/fzf/examples/completion.zsh
+  fi
+fi
+# Use fd/ripgrep for fzf when available
+command -v fd >/dev/null && export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 
-export C2000WARE_PATH=/opt/ti/c2000/C2000Ware_5_04_00_00
+# --- Aliases -----------------------------------------------------------------
+[ -f "$HOME/.aliases" ] && source "$HOME/.aliases"
+
+# --- AI completion (zsh-codex) bound to Ctrl-X -------------------------------
+(( $+functions[create_completion] )) && bindkey '^X' create_completion
+
+# --- Machine-specific / private overrides (not version-controlled) -----------
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"

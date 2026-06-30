@@ -3,26 +3,23 @@
       relink: true
       create: true
 - clean: ['~']
-- shell: 
+- shell:
     - [git submodule update --init --recursive, Installing submodules]
-- link: 
+- link:
     ~/.editorconfig:
-    ~/.tmux.conf: 
+    ~/.tmux.conf:
     ~/.vim/autoload/plug.vim: vim-plug/plug.vim
-    ~/.vimrc: 
+    ~/.vimrc:
     ~/.bashrc:
     ~/.bash_prompt:
-    ~/.ctags: 
-    ~/.dircolors: 
-    ~/.gitconfig: 
-    ~/.gitignore: 
+    ~/.ctags:
+    ~/.dircolors:
+    ~/.gitconfig:
+    ~/.gitignore:
     ~/.inputrc:
     ~/.zshrc:
-    ~/.Xresources: 
+    ~/.aliases: aliases
+    ~/.zsh_plugins.txt: zsh/zsh_plugins.txt
+    ~/.config/starship.toml: config/starship.toml
+    ~/.Xresources:
     ~/.config/nvim: nvim
-    ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions: zsh-autosuggestions
-    ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting: zsh-syntax-highlighting
-    ~/.oh-my-zsh/custom/plugins/zsh-codex: zsh-codex
-    ~/.oh-my-zsh/custom/themes/spaceship-prompt: spaceship-prompt
-    ~/.oh-my-zsh/custom/themes/spaceship.zsh-theme: spaceship-prompt/spaceship.zsh-theme
-

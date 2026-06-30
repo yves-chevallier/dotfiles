@@ -1,0 +1,21 @@
+# ~/.zsh_plugins.txt — antidote plugin manifest
+# antidote turns this into a static, cached bundle on first shell start.
+# After editing this file, just open a new shell (zshrc regenerates the bundle).
+
+# --- Oh-My-Zsh plugins (loaded individually — no full OMZ install needed) ---
+ohmyzsh/ohmyzsh path:plugins/git
+ohmyzsh/ohmyzsh path:plugins/dirhistory
+ohmyzsh/ohmyzsh path:plugins/encode64
+ohmyzsh/ohmyzsh path:plugins/web-search
+ohmyzsh/ohmyzsh path:plugins/colorize
+ohmyzsh/ohmyzsh path:plugins/extract
+
+# --- Extra completions ---
+zsh-users/zsh-completions
+
+# --- AI command completion bound to Ctrl-X (needs: pip install openai) ---
+tom-doerr/zsh_codex
+
+# --- These two MUST stay last and in this order ---
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-syntax-highlighting

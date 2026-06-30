@@ -1,133 +1,117 @@
-return require('packer').startup(function(use)
-    -- Packer peut gérer son propre update
-    use 'wbthomason/packer.nvim'
+-- Plugin specification for lazy.nvim (migrated from packer.nvim)
+return {
+  -- Theme ---------------------------------------------------------------------
+  {
+    'navarasu/onedark.nvim',
+    priority = 1000,
+    config = function()
+      require('onedark').setup { style = 'darker', transparent = true }
+      require('onedark').load()
+    end,
+  },
 
-    use {
-        "github/copilot.vim",
-        config = function()
-            vim.g.copilot_no_tab_map = true -- Désactive le mapping automatique de Tab
-            vim.api.nvim_set_keymap('i', '<C-l>', 'copilot#Accept("<CR>")', { silent = true, expr = true })
-        end,
-    }
+  -- GitHub Copilot (single, consolidated stack: copilot.lua + cmp source) -----
+  {
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    event = 'InsertEnter',
+    config = function()
+      require('copilot').setup {
+        suggestion = { enabled = false }, -- handled through nvim-cmp
+        panel = { enabled = false },
+      }
+    end,
+  },
+  {
+    'zbirenbaum/copilot-cmp',
+    dependencies = 'zbirenbaum/copilot.lua',
+    config = function() require('copilot_cmp').setup() end,
+  },
 
-    use {
-        "zbirenbaum/copilot-cmp",
-        requires = "zbirenbaum/copilot.lua",
-        config = function()
-            require("copilot").setup()
-            require("copilot_cmp").setup()
-        end,
-    }
+  -- File explorer -------------------------------------------------------------
+  {
+    'nvim-tree/nvim-tree.lua',
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    config = function() require('nvim-tree').setup {} end,
+  },
 
+  -- Integrated terminal -------------------------------------------------------
+  {
+    'akinsho/toggleterm.nvim',
+    version = '*',
+    config = function()
+      require('toggleterm').setup { open_mapping = [[<leader>t]], direction = 'float' }
+    end,
+  },
 
-    -- Thèmes
-    use {
-        'navarasu/onedark.nvim',
-        config = function()
-            require('onedark').setup {
-                style = 'darker', -- Utilise des couleurs proches de VSCode
-                transparent = true, -- Conserve le fond actuel
-            }
-            require('onedark').load()
-        end,
-    }
+  -- Status line ---------------------------------------------------------------
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    config = function()
+      require('lualine').setup { options = { theme = 'onedark', icons_enabled = true } }
+    end,
+  },
 
+  -- Symbols outline -----------------------------------------------------------
+  {
+    'simrat39/symbols-outline.nvim',
+    config = function() require('symbols-outline').setup {} end,
+  },
 
-    -- Explorateur de fichiers
-    use {
-        'nvim-tree/nvim-tree.lua',
-        requires = 'nvim-tree/nvim-web-devicons',
-        config = function()
-            require('nvim-tree').setup {}
-        end,
-    }
+  -- Fuzzy finder --------------------------------------------------------------
+  {
+    'nvim-telescope/telescope.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function() require('telescope').setup {} end,
+  },
 
-    -- Terminal intégré
-    use {
-        "akinsho/toggleterm.nvim",
-        tag = '*',
-        config = function()
-            require('toggleterm').setup {
-                open_mapping = [[<leader>t]],
-                direction = 'float', -- Ou 'horizontal' pour une apparence classique
-            }
-        end,
-    }
+  -- Git signs -----------------------------------------------------------------
+  {
+    'lewis6991/gitsigns.nvim',
+    config = function() require('gitsigns').setup {} end,
+  },
 
-    -- Barre d'état moderne
-    use {
-        'nvim-lualine/lualine.nvim',
-        requires = 'nvim-tree/nvim-web-devicons',
-        config = function()
-            require('lualine').setup {
-                options = {
-                    theme = 'onedark',
-                    icons_enabled = true,
-                },
-            }
-        end,
-    }
+  -- LSP -----------------------------------------------------------------------
+  {
+    'neovim/nvim-lspconfig',
+    config = function()
+      -- nvim 0.11+ native API (lspconfig just ships the server definitions)
+      vim.lsp.enable('pyright')
+    end,
+  },
 
-    -- Vue structurée des symboles
-    use {
-        'simrat39/symbols-outline.nvim',
-        config = function()
-            require('symbols-outline').setup {}
-        end,
-    }
-
-    -- Moteur de recherche
-    use {
-        'nvim-telescope/telescope.nvim',
-        requires = { 'nvim-lua/plenary.nvim' },
-        config = function()
-            require('telescope').setup {}
-        end,
-    }
-
-    -- Gestion de Git
-    use {
-        'lewis6991/gitsigns.nvim',
-        requires = 'nvim-lua/plenary.nvim',
-        config = function()
-            require('gitsigns').setup {}
-        end,
-    }
-
-    -- Langage Server Protocol (LSP)
-    use {
-        'neovim/nvim-lspconfig',
-        config = function()
-            require('lspconfig').pyright.setup {}
-        end,
-    }
-
-    -- Autocomplétion
-    use {
-        'hrsh7th/nvim-cmp',
-        requires = {
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-path',
-            'L3MON4D3/LuaSnip',
-            'saadparwaiz1/cmp_luasnip',
-            'zbirdenbaum/copilot-cmp',
+  -- Completion ----------------------------------------------------------------
+  {
+    'hrsh7th/nvim-cmp',
+    dependencies = {
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
+      'zbirenbaum/copilot-cmp',
+    },
+    config = function()
+      local cmp = require('cmp')
+      cmp.setup {
+        snippet = {
+          expand = function(args) require('luasnip').lsp_expand(args.body) end,
         },
-        config = function()
-            local cmp = require('cmp')
-            cmp.setup {
-                mapping = cmp.mapping.preset.insert({
-                    ['<C-n>'] = cmp.mapping.select_next_item(),
-                    ['<C-p>'] = cmp.mapping.select_prev_item(),
-                    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-                    ['<C-Space>'] = cmp.mapping.complete(),
-                }),
-                sources = {
-                    { name = 'nvim_lsp' },
-                    { name = 'buffer' },
-                    { name = 'path' },
-                },
-            }
-        end,
-    }
-end)
+        mapping = cmp.mapping.preset.insert({
+          ['<C-n>'] = cmp.mapping.select_next_item(),
+          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+          ['<C-Space>'] = cmp.mapping.complete(),
+        }),
+        sources = {
+          { name = 'copilot' },
+          { name = 'nvim_lsp' },
+          { name = 'luasnip' },
+          { name = 'buffer' },
+          { name = 'path' },
+        },
+      }
+    end,
+  },
+}
