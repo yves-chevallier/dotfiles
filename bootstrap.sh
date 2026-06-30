@@ -21,6 +21,7 @@ APT_PACKAGES=(
   build-essential
   ripgrep fd-find bat fzf jq
   zoxide eza
+  nodejs npm
 )
 
 if command -v apt-get >/dev/null 2>&1; then

@@ -75,7 +75,10 @@ return {
   -- LSP -----------------------------------------------------------------------
   {
     'neovim/nvim-lspconfig',
-    config = function() require('lspconfig').pyright.setup {} end,
+    config = function()
+      -- nvim 0.11+ native API (lspconfig just ships the server definitions)
+      vim.lsp.enable('pyright')
+    end,
   },
 
   -- Completion ----------------------------------------------------------------
