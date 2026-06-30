@@ -46,7 +46,7 @@ fi
 # --- 3. starship (prompt) ---------------------------------------------------
 if ! command -v starship >/dev/null 2>&1; then
   log "Installing starship → $BIN_DIR"
-  curl -fsSL https://starship.rs/install/install.sh | sh -s -- --yes --bin-dir "$BIN_DIR"
+  curl -fsSL https://starship.rs/install.sh | sh -s -- --yes --bin-dir "$BIN_DIR"
 else
   log "starship already installed"
 fi
