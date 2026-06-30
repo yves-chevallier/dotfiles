@@ -1,0 +1,37 @@
+# ~/.gitconfig.local — machine-specific / private git settings (NOT versioned).
+# Included at the end of ~/.gitconfig, so it overrides the versioned defaults.
+#   cp ~/.dotfiles/gitconfig.local.example ~/.gitconfig.local
+
+# --- Credential manager (WSL -> Windows Git Credential Manager) ---------------
+# Note: the binary was renamed from git-credential-manager-core.exe to
+# git-credential-manager.exe around GCM 2.x. Adjust the path to your install.
+[credential]
+	helper = /mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe
+
+# --- Commit signing with your SSH key (git >= 2.34) ---------------------------
+[user]
+	signingkey = ~/.ssh/id_ed25519.pub
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
+# Optional: file listing allowed signers, for `git log --show-signature`
+# [gpg "ssh"]
+#	allowedSignersFile = ~/.config/git/allowed_signers
+
+# --- Beyond Compare as diff/merge tool (Windows paths) ------------------------
+# Uncomment and set merge.tool / diff.tool to bc5 to prefer Beyond Compare.
+# [merge]
+#	tool = bc5
+# [diff]
+#	tool = bc5
+[difftool "bc5"]
+	cmd = "\"/mnt/c/Program Files/Beyond Compare 5/BComp.exe\" \"$(wslpath -w \"$LOCAL\")\" \"$(wslpath -w \"$REMOTE\")\""
+[mergetool "bc5"]
+	cmd = "\"/mnt/c/Program Files/Beyond Compare 5/Bcomp.exe\" \"$(wslpath -w \"$LOCAL\")\" \"$(wslpath -w \"$REMOTE\")\" \"$(wslpath -w \"$BASE\")\" \"$(wslpath -w \"$MERGED\")\""
+
+# --- Trusted directories ------------------------------------------------------
+[safe]
+	directory = /srv

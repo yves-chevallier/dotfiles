@@ -6,17 +6,20 @@
 	signingkey = CF2D28AFBD3AFBD4
 [github]
     user  = yves-chevallier
-[credential]
-	helper = /mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager-core.exe
 [core]
-    editor = vim
+    editor = nvim
 	ignorecase = false
     autocrlf = false
     filemode = false
     whitespace = cr-at-eol
-    pager = cat
+    pager = delta
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    navigate = true
+    line-numbers = true
 [help]
-    autocorrect = 1
+    autocorrect = prompt
 [color]
     ui = auto
 [web]
@@ -56,6 +59,7 @@
 [push]
     default = simple
 	autoSetupRemote = true
+    followTags = true
 
 [fetch]
     prune = true
@@ -63,8 +67,12 @@
 [branch]
     sort = -committerdate
 
+[rebase]
+    autoStash = true
+
 [diff]
     colorMoved = default
+    algorithm = histogram
 
 [column]
     ui = auto
@@ -82,25 +90,19 @@
 [difftool "vscode"]
     cmd = code --wait --diff "$LOCAL" "$REMOTE"
 
-[difftool "bc4"]
-    cmd = "\"/mnt/c/Program Files/Beyond Compare 5/BComp.exe\" \"$(wslpath -w \"$LOCAL\")\" \"$(wslpath -w \"$REMOTE\")\" /lefttitle=\"$(wslpath -w \"$LOCAL\")\" /righttitle=\"$(wslpath -w \"$REMOTE\")\""
-
-
 [log]
     abbrevCommit = true
     decorate = true
     date = iso
 
 [merge]
-    tool = bc5
+    tool = vscode
+    conflictStyle = zdiff3
 
 [mergetool]
     prompt = false
     keepBackup = false
     keepTemporaries = true
-
-[mergetool "bc5"]
-    cmd = "\"/mnt/c/Program Files/Beyond Compare 5/Bcomp.exe\" \"$(wslpath -w \"$LOCAL\")\" \"$(wslpath -w \"$REMOTE\")\" \"$(wslpath -w \"$BASE\")\" \"$(wslpath -w \"$MERGED\")\""
 
 [mergetool "vscode"]
     cmd = code --wait --merge "$LOCAL" "$REMOTE" "$BASE"
@@ -194,5 +196,12 @@
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
-[safe]
-	directory = /srv
+
+[tag]
+	sort = version:refname
+
+# Machine-specific / private settings (credential helper, Beyond Compare,
+# safe.directory, commit signing). Not version-controlled — see
+# gitconfig.local.example. Placed last so it overrides anything above.
+[include]
+	path = ~/.gitconfig.local

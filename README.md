@@ -45,7 +45,11 @@ is **not** version-controlled. A template is provided:
 
 ```sh
 cp ~/.dotfiles/zshrc.local.example ~/.zshrc.local
+cp ~/.dotfiles/gitconfig.local.example ~/.gitconfig.local   # credential helper, signing, Beyond Compare
 ```
+
+`~/.gitconfig.local` is pulled in via `[include]` at the end of the versioned
+`gitconfig`, so it overrides the shared defaults.
 
 ## tmux plugins
 

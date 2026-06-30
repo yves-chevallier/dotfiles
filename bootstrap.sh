@@ -19,7 +19,7 @@ mkdir -p "$BIN_DIR"
 APT_PACKAGES=(
   zsh tmux neovim git curl wget unzip
   build-essential
-  ripgrep fd-find bat fzf jq
+  ripgrep fd-find bat fzf jq git-delta
   zoxide eza
   nodejs npm
 )
