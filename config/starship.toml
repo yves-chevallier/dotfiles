@@ -1,0 +1,48 @@
+# ~/.config/starship.toml — prompt configuration
+# Reproduces the spirit of the previous spaceship layout (two lines,
+# dir + git + language versions, exec time, then the prompt char).
+
+add_newline = true
+
+format = """
+$directory\
+$git_branch$git_status\
+$package\
+$nodejs$dotnet$ruby$python$rust\
+$cmd_duration\
+$line_break\
+$battery\
+$jobs\
+$character"""
+
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[➜](bold red)"
+
+[directory]
+truncation_length = 4
+truncate_to_repo = true
+style = "bold cyan"
+
+[git_branch]
+symbol = " "
+style = "bold purple"
+
+[git_status]
+style = "bold red"
+
+[cmd_duration]
+min_time = 2000
+format = "took [$duration](bold yellow) "
+
+[battery]
+disabled = false
+[[battery.display]]
+threshold = 20
+style = "bold red"
+
+[jobs]
+symbol = "✦ "
+
+[package]
+disabled = false
