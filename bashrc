@@ -1,132 +1,49 @@
-# ~/.bashrc
+# ~/.bashrc — kept minimal. zsh is the primary shell; this covers bash sessions.
 
 # If not running interactively, don't do anything
 [[ "$-" != *i* ]] && return
 
 # Bash completion
-if [ -f /etc/bash_completion ]; then
-  . /etc/bash_completion
-fi
+[ -f /etc/bash_completion ] && . /etc/bash_completion
 
-# Conditionals
-_isroot=0
-[[ $UID -eq 0 ]] && _isroot=1
-
-_color=0
-[[ "$TERM" =~ xterm_color ]] && _color=1
-
-# Umask
 umask 022
 
-# History
-export HOSTCONTROL=ignoredups:ignorespace
-export HISTSIZE=9999
-export HISTFILESIZE=9999
-
-# Shelloptions (shopt)
-shopt -s cdspell                 # Autocorrect mistyped directory
-shopt -s autocd                  # Automatically add cd before known dir names
-shopt -s dirspell
-shopt -s globstar
-shopt -s progcomp
-shopt -s extglob
-shopt -s histappend              # Append history instead of overwriting file
-shopt -s checkwinsize            # Check window size after each command
-shopt -s no_empty_cmd_completion # No empty completion
-shopt -s cmdhist
-shopt -s histappend histreedit histverify
-
-# Misc Exports
-export HOSTCONTROL=ignoredups:ignorespace
+# --- History -----------------------------------------------------------------
+export HISTCONTROL=ignoredups:ignorespace
 export HISTSIZE=100000
 export HISTFILESIZE=200000
 export HISTIGNORE='&:ls:ll:la:cd:exit:clear:history'
-export PAGER=less
-export EDITOR=vim
-export PATH="~/bin:~/.scripts:$PATH"
+
+# --- Shell options -----------------------------------------------------------
+shopt -s cdspell autocd dirspell globstar histappend checkwinsize cmdhist histreedit histverify
+
+# --- Environment -------------------------------------------------------------
+export PATH="$HOME/.local/bin:$HOME/bin:$HOME/.scripts:$PATH"
+export EDITOR="nvim"
+export VISUAL="nvim"
+export PAGER="less"
+export LESS="-R"
 export TIME_STYLE=long-iso
 
-# Mintty
-bind -r '\C-s'
-stty -ixon
+# --- Colors ------------------------------------------------------------------
+[ -f "$HOME/.dircolors" ] && eval "$(dircolors "$HOME/.dircolors")"
 
-# Prompt
-source ~/.bash_prompt
+# --- Prompt ------------------------------------------------------------------
+# starship if available, else fall back to the legacy bash_prompt
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init bash)"
+elif [ -f ~/.bash_prompt ]; then
+  source ~/.bash_prompt
+fi
 
-# Aliases
-alias browse='explorer $(cygpath --windows $(pwd))'
+# --- Tools -------------------------------------------------------------------
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init bash)"
+if command -v fzf >/dev/null 2>&1 && fzf --bash >/dev/null 2>&1; then
+  eval "$(fzf --bash)"
+fi
 
-# Standard tools
-alias du='du -c -h'
-alias df='df -h'
-alias less='less -r'                          # raw control characters
-alias grep='grep --color'                     # show differences in colour
-alias egrep='egrep --color=auto'              # show differences in colour
-alias fgrep='fgrep --color=auto'              # show differences in colour
-alias diff='colordiff'
+# --- Aliases (shared with zsh) -----------------------------------------------
+[ -f ~/.aliases ] && source ~/.aliases
 
-alias ls='ls -h --color=auto --hide="*.pyc"'
-alias lx='ls -lXB'    # Sort by extensions.
-alias lk='ls -lSr'    # Sort by size, biggest last.
-alias lt='ls -ltr'    # Sort by date, most recent last.
-alias lc='ls -ltcr'   # Sort by/show change time, most recent last.
-alias lu='ls -ltur'   # Sort by/show access time, most recent last.
-alias ll='ls -lv --group-directories-first'
-alias lr='ll -R'
-alias la='ll -a'
-
-alias svim='sudo vim'
-alias root='sudo su'
-
-alias vi='vim'
-alias tmux="tmux -u"
-alias ..='cd ..'
-
-# Search tool
-alias ags='ag --color-match="31;40" -U -S -G "[.](c|h|inc|def|txt|ldf|asm)$"'
-alias agd='ag --color-match="31;40" -U -S -G "[.](def)$"'
-
-# At work
-alias ct="cleartool"
-
-# Very quick
-alias a='ag --color-match="31;40" -U -S'
-alias g="git g"
-alias l="ls -h --color=auto"
-alias p="ipython --profile=etel"
-alias t="task"
-alias v="vim"
-
-alias chrome="'/cygdrive/c/Program Files (x86)/Google/Chrome/Application/chrome.exe'"
-alias todo="vim ~/.notes/todo.md"
-alias note="vim ~/.notes/notes.md"
-
-# WSL
-alias e='explorer.exe .'
-
-# Easily extract any kind of atchives.
-extract () {
-  if [ -f $1 ] ; then
-    case $1 in
-      *.tar.bz2)   tar xjvf $1    ;;
-      *.tar.gz)    tar xzvf $1    ;;
-      *.bz2)       bzip2 -d $1    ;;
-      *.rar)       unrar2dir $1    ;;
-      *.gz)        gunzip $1    ;;
-      *.tar)       tar xf $1    ;;
-      *.tbz2)      tar xjf $1    ;;
-      *.tgz)       tar xzf $1    ;;
-      *.zip)       unzip2dir $1     ;;
-      *.Z)         uncompress $1    ;;
-      *.7z)        7z x $1    ;;
-      *.ace)       unace x $1    ;;
-      *)           echo "'$1' cannot be extracted via extract()"   ;;
-    esac
-  else
-    echo "'$1' is not a valid file"
-  fi
-}
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-export PATH=$HOME/.local/bin:$HOME/.config/composer/vendor/bin:$PATH
-
+# --- Machine-specific overrides ----------------------------------------------
+[ -f ~/.bashrc.local ] && source ~/.bashrc.local
