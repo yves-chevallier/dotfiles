@@ -105,7 +105,7 @@
     keepTemporaries = true
 
 [mergetool "vscode"]
-    cmd = code --wait --merge "$LOCAL" "$REMOTE" "$BASE"
+    cmd = code --wait --merge "$REMOTE" "$LOCAL" "$BASE" "$MERGED"
 
 [alias]
     # Checkout
